@@ -2,12 +2,11 @@ var config = {};
 
 config.app = {
     "login": {
-        "url": "https://www.rakuten.co.jp/myrakuten/login.html",
+        "url": "https://www.dmm.com/my/-/login/=/path=Sg__/",
         "username" : "{username}",
         "password" : "{password}"
     },
-    "logout": {
-        "url": "https://member.id.rakuten.co.jp/rms/nid/logout"
+        "url": "http://www.dmm.com/"
     }
 };
 
