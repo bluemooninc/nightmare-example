@@ -9,10 +9,10 @@ describe ('login and logout at rakuten.co.jp', function() {
     /** 楽天にログイン、ログアウト */
     describe ('login and logout', function () {
 
-        var nightmare;
+        var nightmare
 
         beforeEach (function() {
-            nightmare = Nightmare();
+            nightmare = Nightmare({ show: true });
         });
 
         afterEach (function*() {
@@ -25,35 +25,29 @@ describe ('login and logout at rakuten.co.jp', function() {
                 .viewport(1024,768)
                 .goto(config.app.login.url)
                 .wait()
-                .type('input#userid', config.app.login.username)
-                .type('input#passwd', config.app.login.password)
-                .click('input.loginButton')
-                .wait(250)
+                .type('input#login_id', config.app.login.username)
+                .type('input#password', config.app.login.password)
+                .click('html body div#w div#main-my.page-login.d-rst div.wrap div.area-login div.sect div.box-account dl.box dd form.validator.login div#loginbutton_script_on.box-btn-login span.btn-login.btn input')
+                .wait(2000)
                 .screenshot('./logs/screenshots/login.png')
                 .wait(250)
                 .evaluate(function () {
                     return location.origin + location.pathname;
-                })
-                ;
-
-            location.should.eql('http://www.rakuten.co.jp/');
+                });
+            location.should.eql('http://www.dmm.com/');
         });
 
         it ('logout', function*() {
-
             var location = yield nightmare
-                .goto('http://www.rakuten.co.jp/')
+                .goto('http://book.dmm.com/detail/b510ckaka00871/')
                 .wait()
-                .click('a.mr-logout-btn')
-                .wait(250)
                 .screenshot('./logs/screenshots/logout.png')
                 .wait(250)
                 .evaluate(function() {
-                    return location.origin + location.pathname;
+                    return document.getElementsByClassName('m-boxSubDetailPurchase__price__value')[0].innerText;
                 })
                 ;
-
-            location.should.eql(config.app.logout.url);
+		location.should.eql('626円');
         });
 
     });
